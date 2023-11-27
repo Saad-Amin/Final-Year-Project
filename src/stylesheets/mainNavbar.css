@@ -1,0 +1,10 @@
+.navbar-brand > a {
+    text-decoration: none;
+    color: #ffff;
+}
+.navbar-nav > a{
+    text-decoration: none;
+    align-items: center;
+    color: #ffff;
+    margin-right: 10px;
+}
