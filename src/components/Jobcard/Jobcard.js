@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router-dom';
 
-const Jobcard = ({jobtitle, companyName, jobLocation, jobSalaryRange, jobType, jobDescription, jobApply}) => {
+const Jobcard = ({jobtitle, companyName, jobLocation, jobSalaryRange, jobType, jobDescription}) => {
   const navigate = useNavigate();
   return (
     <Card style={{ width: '30rem', textAlign: 'left', marginBottom: '15px' }}>
@@ -26,7 +26,7 @@ const Jobcard = ({jobtitle, companyName, jobLocation, jobSalaryRange, jobType, j
           bulk of the card's content.
         </Card.Text>
         <Button variant="primary" onClick={() => {
-          navigate('/applyjob')
+          navigate('/login')
         }}>Apply Now</Button>
       </Card.Body>
     </Card>

@@ -7,6 +7,7 @@ import Jobpostingform from '../Jobpostingform/Jobpostingform';
 import JobApplyform from '../JobApplyform/JobApplyform';
 import Login from '../LoginSignup/Login';
 import Signup from '../LoginSignup/Signup'
+import Dashboard from '../Dashboard/Dashboard';
 
 
 const MainLayout = () => {
@@ -20,9 +21,9 @@ const MainLayout = () => {
         <Route path='/applyjob' element={<JobApplyform />} />
         <Route path='/Signup' element={<Signup/>}/>
         <Route path='Jobpostingform' element={<Jobpostingform/>}/>
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </div>
   )
 }
-
 export default MainLayout

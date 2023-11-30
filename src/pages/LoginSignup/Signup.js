@@ -12,19 +12,28 @@ const Signup = () => {
           <h1 className="text-center">Post a Job</h1>
 
           <Form>
+          <Form.Group className="mb-3">
+          <Form.Label>Sign up As a</Form.Label>
+          <Form.Select aria-label="Default select example">
+            <option>Select</option>
+            <option value="1">Company</option>
+            <option value="2">Applicant</option>
+            <option value="3">Admin</option>
+          </Form.Select>
+        </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Company Name</Form.Label>
                   <Form.Control type="text" placeholder="Company Name" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label>HR Name</Form.Label>
-                  <Form.Control type="text" placeholder="HR Name" />
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" placeholder="Name" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label>Company Address</Form.Label>
-                  <Form.Control type="text" placeholder="Company Address" />
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control type="text" placeholder="Address" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
