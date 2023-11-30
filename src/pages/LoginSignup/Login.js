@@ -1,96 +1,74 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Typography } from "antd";
+import { Container, Row, Col, Form, Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
+const navigate = useNavigate;
 const Login = () => {
-  const [userType] = useState('Company');
-  const navigate = useNavigate();
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const pressed = (e) => {
+    e.preventDefault();
+    console.log("Email is: ",email);
+    console.log("Password is: ",password);
+    axios
+      .post("http://127.0.0.1:5000/login", {email,password})
+      .then(function (response) {
+        if (response.status === 250) {
+          alert("Login Susscess");
+        }
+        else if (response.status === 200) {
+          alert("Invalid Email or Password");
+        }
+      })
+      .catch(function (error) {
+        console.log(error, "error");
+        if (error.response.status === 401) {
+          alert("Invalid Email or Password");
+        }
+      });
+  };
 
-const onFinish = (values) => {
-  //console.log("🚀 ~ file: Login.js:9 ~ onFinish ~ values:", values)
-if (userType) {
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
- navigate('/dashboard')    
-} else {
-  
-  // userType === 'Applicant' ? 
-  // : userType === 'Company' ?
-  //   navigate('/')
-  // : userType === 'Admin' ?
-  //  navigate('/')
-  //  : null;
-}
-};
-
-const onFinishFailed = (errorInfo) => {
-  console.log("🚀 ~ file: Login.js:7 ~ onFinishFailed ~ errorInfo:", errorInfo)
-  console.log("Failed:", errorInfo);
-};
-
+  const handlePassChange = (e) => {
+    setPassword(e.target.value);
+  };
   return (
+    <Container fluid className="p-0" style={{ backgroundColor: 'white', minHeight: '100vh' , marginTop: '50px', fontWeight:'bold'}}>
+      <Row className="justify-content-center">
+        <Col xs={10} sm={8} md={6} lg={4}>
+          <h1 className="text-center">Login</h1>
 
-  <div style={{
-    marginTop: '3rem'
-  }}>
-    <Col xs={24}>
-      <Typography.Title>
-        Login
-      </Typography.Title>
-      <Form
-        name="basic"
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-          margin: '0 auto'
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          
-          label="Email Address"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please Input your Email!",
-            },
-          ]}
-        >
-          <Input type={'email'} placeholder={'Enter your Email'}/>
-        </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password placeholder={'Enter Your Password'}/>
-        </Form.Item>
+          <Form>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control value={email} onChange={handleEmailChange} type="email" placeholder="name@example.com" />
+                </Form.Group>
 
-        <Form.Item
-        >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-      <Typography.Link href="/SignUp" target="_blank">
-        Sign Up Now
-    </Typography.Link>
-    </Col>
-  </div>
-  )
-}
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control value={password} onChange={handlePassChange} type="password" placeholder="Password" />
+                </Form.Group>
+                <Button variant="primary" type="submit" className="w-100 mt-3" 
+            onClick={pressed}>
+              Login
+            </Button>
 
-export default Login
+          </Form>
+
+          <div className="mt-3 text-center">
+            <a href="/Signup">Sign Up</a>
+          </div>
+          <div className="mt-3 text-center">
+            <a href="/">Forgot Password?</a>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default Login;
