@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import { id } from "date-fns/locale";
+
+const LoadingIndicator = styled.div`
+  display: ${(props) => (props.loading ? "block" : "none")};
+  margin-top: 20px;
+`;
 
 const AppContainer = styled.div`
   max-width: 800px;
@@ -72,48 +79,77 @@ const SubmitButton = styled.button`
 `;
 
 function Qus_and_AnsPage() {
-  const [qaList, setQAList] = useState([
-    { id: 1, question: 'What is your favorite programming language?', answer: '' },
-    { id: 2, question: 'What project are you currently working on?', answer: '' },
-    { id: 3, question: 'What project are you currently working on?', answer: '' },
-    { id: 4, question: 'What project are you currently working on?', answer: '' },
-    { id: 5, question: 'What project are you currently working on?', answer: '' },
-    { id: 6, question: 'What project are you currently working on?', answer: '' },
-    { id: 7, question: 'What project are you currently working on?', answer: '' },
-    { id: 8, question: 'What project are you currently working on?', answer: '' },
-    { id: 9, question: 'What project are you currently working on?', answer: '' },
-    { id: 10, question: 'What project are you currently working on?', answer: '' },
+  const [qaList, setQaList] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    // Add more questions as needed
-  ]);
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/getqa")
+      .then((response) => {
+        const questions = response.data.questions;
+        const initialQaList = questions.map((question, index) => ({
+          id: index,
+          question,
+          answer: "",
+        }));
+        setQaList(initialQaList);
+      })
+      .catch((error) => console.error("Error fetching questions:", error));
+  }, []);
 
   const handleAnswerChange = (id, answer) => {
-    setQAList((prevQAList) =>
-      prevQAList.map((qa) => (qa.id === id ? { ...qa, answer } : qa))
-    );
+    setUserAnswers((prevAnswers) => {
+      const newAnswers = [...prevAnswers];
+      newAnswers[id] = answer !== null && answer !== undefined ? answer : "";
+      return newAnswers;
+    });
   };
-  const handleFormSubmit = () => {
-    // Customize the submit functionality here, e.g., log answers to the console
-    console.log('Submitted Answers:', qaList);
+
+  const handleSubmit = () => {
+    setLoading(true);
+    // Replace undefined or null values with empty strings
+    const cleanedAnswers = userAnswers.map((answer) =>
+      answer !== null && answer !== undefined ? answer : ""
+    );
+
+    // console.log("User Answers:", cleanedAnswers);
+    axios
+      .post("http://127.0.0.1:5000/getscore", {
+        cleanedAnswers,
+      })
+      .then(function (response) {
+        if (response.status === 200) {
+          alert("Your Score is : " + response.data.user_score);
+        }
+      })
+      .catch(function (error) {
+        console.log(error, "error");
+        if (error.response.status === 401) {
+          alert("Invalid Email or Password");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
     <AppContainer>
-      <h1 style={{ color: '#3498db' }}>Online Test Question-Answer </h1>
+      <h1 style={{ color: "#3498db" }}>Online Test Question-Answer </h1>
       <QuestionList>
         {qaList.map((qa) => (
           <QuestionItem key={qa.id}>
             <QuestionText>{qa.question}</QuestionText>
             <AnswerTextarea
-              value={qa.answer}
               onChange={(e) => handleAnswerChange(qa.id, e.target.value)}
               placeholder="Write your answer..."
             />
           </QuestionItem>
         ))}
       </QuestionList>
-      <SubmitButton onClick={handleFormSubmit}>Submit Answers</SubmitButton>
-
+      <SubmitButton onClick={handleSubmit}>Submit Answers</SubmitButton>
+      <LoadingIndicator loading={loading}>Submitting...</LoadingIndicator>
     </AppContainer>
   );
 }
