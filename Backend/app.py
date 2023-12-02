@@ -2,6 +2,10 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
 import uuid
+import os
+from PyPDF2 import PdfReader
+import re
+import spacy
 
 app = Flask(__name__)
 CORS(app,supports_credentials=True)
@@ -14,6 +18,69 @@ db_config = {
     'port': '5432',
     'database': 'Automated_Interview'
 }
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'pdf'}  # Specify the allowed file extensions
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def check_CV(fileName):
+    reader = PdfReader("uploads/"+fileName)
+    page = reader.pages[0]
+    actualText = page.extract_text()
+    # print(actualText)
+
+    match = re.search(r'[\w\.-]+@[a-z0-9\.-]+', actualText)
+    email= match.group(0)
+    # print(email)
+
+    # Find Similarities Between Resume & Job Discription
+    nlp = spacy.load("en_core_web_lg")
+    w1 = actualText
+    w2 = """Bachelors degree a Minimum. Excellent verbal, written, and interpersonal communication skills. Experience with
+    Automation tools like Cypress, Cross Browser Testing, Selenium, Performance testing tools, Browser Debuggers. Must be a 
+    self-motivator and self-starter. Exceptional listening and analytical skills. Excellent time management skills. Must be 
+    able to interact with people at all levels within the organization effectively. Must be proficient in following technical 
+    processes and documentation. Ability to multitask and successfully operate in a fast-paced, team environment. Must adapt well
+    to change and successfully set and adjust priorities as needed. Must be proficient with Microsoft Office and Excel. Job 
+    Responsibilities:A quality assurance specialist to ensure the company's quality standards in the final product. In general, 
+    the QA professional will be responsible for the development and implementation of inspection activities, the detection and 
+    resolution of problems, and the delivery of satisfactory outcomes. Should any defects be found, its up to the QA specialist
+    to apply corrective actions, like test software, systems, and workflows for errors and verification before and during 
+    deployment. Test current products and identifying deficiencies. Suggest solutions to identified product problems. Investigate 
+    product quality in order to make improvements to achieve better customer satisfaction. Plan, create and manage the overall 
+    Quality Planning strategy. Collaborate with the Product Development team to ensure consistent project execution. Identify 
+    quality assurance process bottleneck and suggest actions for improvement. Oversee continuous improvement projects. Collect 
+    quality data. Identify key KPIs for product quality."""
+    w1= nlp(w1)
+    w2= nlp(w2)
+    result = w1.similarity(w2)
+    final_similarity = round(result*100)
+    # print("Similarities Between Resume & Job Discription is",final_similarity,"%")
+    return final_similarity
+
+@app.route('/upload-cv', methods=['POST'])
+def upload_cv():
+    # Check if the POST request has the file part
+    if 'cv' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    file = request.files['cv']
+    fileName = request.form.get('filename')
+    print("FILE Name is : ",file.filename)
+
+    # Save the uploaded file to the designated folder
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+    match = check_CV(fileName)
+    return jsonify({
+        'message': 'File uploaded successfully',
+        'CV_match_score' : match,
+        'file_name' : fileName
+        }), 200
+
 
 # Function to connect to PostgreSQL
 def connect_to_db():
@@ -141,12 +208,6 @@ def register():
         conn, cur = connect_to_db()
         cur.execute('INSERT INTO users(user_id, role_id, name, email, password, cnic, company_name, dob) VALUES (%s, %s, %s,%s, %s, %s,%s, %s)', (user_id, role_id, name, email, password, cnic, company_name, dob))
         conn.commit()
-
-        # Insert user data into the 'all_users' table
-        # cur.execute('INSERT INTO users_info (id, username) VALUES (%s, %s)', (user_id, name))
-        # conn.commit()
-
-        # conn.close()
         
         return jsonify(
             {

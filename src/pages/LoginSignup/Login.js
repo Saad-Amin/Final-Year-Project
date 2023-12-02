@@ -3,8 +3,8 @@ import { Container, Row, Col, Form, Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-const navigate = useNavigate;
 const Login = () => {
+  const navigate = useNavigate();
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const pressed = (e) => {
@@ -16,6 +16,7 @@ const Login = () => {
       .then(function (response) {
         if (response.status === 250) {
           alert("Login Susscess");
+          navigate('/applyjob');
         }
         else if (response.status === 200) {
           alert("Invalid Email or Password");
