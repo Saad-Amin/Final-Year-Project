@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlusSquareOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
-import JobApplyform from '../JobApplyform/JobApplyform';
+// import JobApplyform from '../JobApplyform/JobApplyform';
 const { Header, Content, Footer, Sider } = Layout;
 const Dashboard = () => {
 

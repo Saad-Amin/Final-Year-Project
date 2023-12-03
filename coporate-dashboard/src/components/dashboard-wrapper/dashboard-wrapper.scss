@@ -1,0 +1,8 @@
+@use '../../scss/abstracts/' as *;
+
+.dashboard-wrapper {
+    @include flex(stretch);
+    @include tablet {
+        flex-direction: column;
+    }
+}

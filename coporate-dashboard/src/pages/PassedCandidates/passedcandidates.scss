@@ -1,0 +1,22 @@
+@use '../../scss/abstracts/' as *;
+
+.brandtable .rdt_Table{
+    border-radius: 20px !important;
+}
+.rdt_TableHead{
+    color: $white !important;
+    font-weight: 500 !important;
+    font-size: 1.2rem !important;
+}
+.rdt_TableHeadRow{
+    background-color: $primary !important;
+}
+.rdt_TableCell{
+    padding: 10px 0 !important;
+    font-size: 15px !important;
+}
+
+.imgCategory{
+    width: auto !important;
+    height: auto! important;
+}

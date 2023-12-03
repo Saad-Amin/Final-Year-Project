@@ -1,0 +1,35 @@
+@use '../../scss/abstracts/' as *;
+
+.addbtn{
+    width: 100%;
+    background-color: $light_secondary;
+    color: $black;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 1px -1px 30px -5px rgba(236, 236, 236, 0.75);
+  -webkit-box-shadow: 1px -1px 30px -5px rgba(203, 203, 203, 0.75);
+  -moz-box-shadow: 1px -1px 30px -5px rgba(180, 180, 180, 0.75);
+}
+.addbtn:hover{
+    background-color: $secondary;
+    color: $white;
+}
+
+.brandtable .rdt_Table{
+    border-radius: 20px !important;
+}
+.rdt_TableHead{
+    color: $white !important;
+    font-weight: 500 !important;
+    font-size: 1.2rem !important;
+}
+.rdt_TableHeadRow{
+    background-color: $primary !important;
+}
+.rdt_TableCell{
+    padding: 10px 0 !important;
+    font-size: 15px !important;
+}

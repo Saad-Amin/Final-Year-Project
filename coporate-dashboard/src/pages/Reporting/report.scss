@@ -1,0 +1,23 @@
+@use '../../scss/abstracts/' as *;
+
+.nav-item>button{
+    color: $secondary !important;
+}
+
+.addbtn{
+    width: 100%;
+    background-color: $light_secondary;
+    color: $black;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 1px -1px 30px -5px rgba(236, 236, 236, 0.75);
+  -webkit-box-shadow: 1px -1px 30px -5px rgba(203, 203, 203, 0.75);
+  -moz-box-shadow: 1px -1px 30px -5px rgba(180, 180, 180, 0.75);
+}
+.addbtn:hover{
+    background-color: $secondary;
+    color: $white;
+}

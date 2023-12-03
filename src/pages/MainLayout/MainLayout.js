@@ -8,7 +8,7 @@ import JobApplyform from '../JobApplyform/JobApplyform';
 import Login from '../LoginSignup/Login';
 import Signup from '../LoginSignup/Signup'
 import Dashboard from '../Dashboard/Dashboard';
-import Qus_and_AnsPage from '../Qus_and_AnsPage/Qus_and_AnsPage';
+import QusAndAnsPage from '../Qus_and_AnsPage/Qus_and_AnsPage';
 
 
 const MainLayout = () => {
@@ -23,7 +23,7 @@ const MainLayout = () => {
         <Route path='/Signup' element={<Signup/>}/>
         <Route path='Jobpostingform' element={<Jobpostingform/>}/>
         <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/qpage' element={<Qus_and_AnsPage />} />
+        <Route path='/qpage' element={<QusAndAnsPage />} />
       </Routes>
     </div>
   )

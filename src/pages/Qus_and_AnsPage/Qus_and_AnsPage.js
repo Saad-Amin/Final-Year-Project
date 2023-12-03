@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { id } from "date-fns/locale";
+// import { id } from "date-fns/locale";
 
 const LoadingIndicator = styled.div`
   display: ${(props) => (props.loading ? "block" : "none")};

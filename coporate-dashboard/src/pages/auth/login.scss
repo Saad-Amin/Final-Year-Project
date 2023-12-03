@@ -1,0 +1,161 @@
+@use '../../scss/abstracts/' as *;
+
+.logincontainer {
+    width: auto;
+    height: 200px;
+
+}
+
+.forgotpassword-text{
+    text-align: right;
+    font-size: 16px;
+    color: $secondary;
+    font-weight: 500;
+
+}
+
+.forgotpassword-text a:hover{
+    color: $primary !important;
+}
+
+.instructiontext{
+    font-size: 15px;
+    text-align: justify;
+    font-weight: 500;
+}
+
+section{
+    width: 100%;
+    padding: 10px;
+    background-color: $bodyBg;
+    min-height:calc(100vh - 80px);
+}
+
+section .form_data{
+    max-width: 550px;
+    margin: 25px auto;
+    padding: 35px 10px;
+    box-shadow: 0 0 15px -10px $primary;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_heading{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_data h1{
+    font-size: 34px;
+    color: $primary;
+    font-weight: 500;
+}
+
+.form_data p{
+    color: $primary;
+    font-size: 15px;
+}
+
+.form_data form{
+    width: 100%;
+    padding: 0px 30px;
+}
+
+.form_data form .form_input input{
+    width: 100%;
+    padding: 11px;
+    border: 1px solid $white;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 14px;
+    margin-top: 9px;
+    font-size: 14px;
+    
+}
+
+.form_data form .form_input label{
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.form_input .two{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.form_data form .form_input input:focus{
+    border:2px solid $secondary;
+}
+
+
+.form_data form .form_input input::placeholder{
+    color: rgb(153, 151, 151);
+    letter-spacing: .5px;
+    font-size: 14px;
+}
+
+.form_input .showpass{
+    position: absolute;
+    right: 0;
+    top:1px;
+    padding: 7px 10px;
+    margin-right: 5px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $primary;
+    background-color: $muted;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form .btn{
+    display:block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    background-color:$primary;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all .3s ease-in;
+}
+
+.btn-signup {
+    display:block;
+    width: 90%;
+    padding: 15px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    background-color:$primary;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all .3s ease-in;
+}
+
+form .btn:hover, .btn-signup:hover{
+    background-color: $secondary;
+    color: $white;
+}
+
+.form_data form p{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form_data form a{
+    text-decoration: none;
+    color: $secondary;
+}

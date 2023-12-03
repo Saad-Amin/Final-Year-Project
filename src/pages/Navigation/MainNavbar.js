@@ -17,7 +17,7 @@ function MainNavbar() {
               <Link to={"/"}>Job Page</Link>
             </Nav>
             <Nav>
-              <Link to={"/Login"}>Post a Job</Link>
+              <Link to={"http://localhost:3001/"}>Post a Job</Link>
             </Nav>
           </Nav>
         </Container>
